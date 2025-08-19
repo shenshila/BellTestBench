@@ -7,9 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Service
 @RequiredArgsConstructor
 public class KafkaMessageServiceImpl implements KafkaMessageService {
@@ -17,13 +14,6 @@ public class KafkaMessageServiceImpl implements KafkaMessageService {
 
     @Override
     public void sendMessage(String msgId, String method, String uri) {
-//        Map<String, Object> message = new HashMap<>();
-//
-//        message.put("msgId", msgId);
-//        message.put("timestamp", System.currentTimeMillis());
-//        message.put("method", method);
-//        message.put("uri", uri);
-
         KafkaMessage kafkaMessage = new KafkaMessage(
                 msgId,
                 System.currentTimeMillis(),
@@ -32,7 +22,5 @@ public class KafkaMessageServiceImpl implements KafkaMessageService {
         );
 
         kafkaTemplate.send(KafkaTopicConfig.POSTED_MESSAGE_TOPIC, kafkaMessage);
-
-//        kafkaTemplate.send(KafkaTopicConfig.POSTED_MESSAGE_TOPIC, message.toString());
     }
 }

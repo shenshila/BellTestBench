@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class KafkaTopicConfig {
 
-    public static final String POSTED_MESSAGE_TOPIC = "posted-message";
+    public static final String POSTED_MESSAGE_TOPIC = "posted-messages";
 
     @Bean
     public NewTopic postedMessages() {
