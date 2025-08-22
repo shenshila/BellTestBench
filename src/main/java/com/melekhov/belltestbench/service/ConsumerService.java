@@ -1,8 +1,7 @@
 package com.melekhov.belltestbench.service;
 
 import com.melekhov.belltestbench.dto.KafkaMessageDto;
-import com.melekhov.belltestbench.model.KafkaMessage;
 
-public interface MessageService {
+public interface ConsumerService {
     void save(KafkaMessageDto kafkaMessage);
 }

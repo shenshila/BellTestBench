@@ -2,14 +2,14 @@ package com.melekhov.belltestbench.service.impl;
 
 import com.melekhov.belltestbench.config.KafkaTopicConfig;
 import com.melekhov.belltestbench.dto.KafkaMessageDto;
-import com.melekhov.belltestbench.service.KafkaMessageService;
+import com.melekhov.belltestbench.service.ProducerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class KafkaMessageServiceImpl implements KafkaMessageService {
+public class ProducerServiceImpl implements ProducerService {
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
     @Override
