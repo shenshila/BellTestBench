@@ -1,6 +1,6 @@
 package com.melekhov.belltestbench.controller;
 
-import com.melekhov.belltestbench.dto.MessageRequest;
+import com.melekhov.belltestbench.dto.MessageRequestDto;
 import com.melekhov.belltestbench.service.KafkaMessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/api/")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class MessageController {
     private final KafkaMessageService producer;
 
     @PostMapping("/post-message")
-    public ResponseEntity<String> postMessage(@RequestBody MessageRequest requestMessage) {
+    public ResponseEntity<String> postMessage(@RequestBody MessageRequestDto requestMessage) {
         try {
             producer.sendMessage(requestMessage.getMsgId(), "POST", "/post-message");
             return ResponseEntity.ok("Message posted successfully");

@@ -1,7 +1,7 @@
 package com.melekhov.belltestbench.service.impl;
 
 import com.melekhov.belltestbench.config.KafkaTopicConfig;
-import com.melekhov.belltestbench.model.KafkaMessage;
+import com.melekhov.belltestbench.dto.KafkaMessageDto;
 import com.melekhov.belltestbench.service.KafkaMessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -14,13 +14,13 @@ public class KafkaMessageServiceImpl implements KafkaMessageService {
 
     @Override
     public void sendMessage(String msgId, String method, String uri) {
-        KafkaMessage kafkaMessage = new KafkaMessage(
+        KafkaMessageDto kafkaMessageDto = new KafkaMessageDto(
                 msgId,
                 System.currentTimeMillis(),
                 method,
                 uri
         );
 
-        kafkaTemplate.send(KafkaTopicConfig.POSTED_MESSAGE_TOPIC, kafkaMessage);
+        kafkaTemplate.send(KafkaTopicConfig.POSTED_MESSAGE_TOPIC, kafkaMessageDto);
     }
 }

@@ -21,6 +21,16 @@ services:
     networks:
       - network
 
+  postgres:
+    image: 'postgres:15'
+    container_name: 'bench_db'
+    ports:
+      - "5432:5432"
+    env_file:
+      - db.env
+    networks:
+      - network
+
 networks:
   network:
     driver: bridge

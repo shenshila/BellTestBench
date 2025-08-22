@@ -1,14 +1,22 @@
 package com.melekhov.belltestbench.model;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
+@Builder
+@Entity
+@Table(name = "message")
 @AllArgsConstructor
+@NoArgsConstructor
 public class KafkaMessage {
-    private String msg_id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    private String msgId;
     private long timestamp;
     private String method;
     private String uri;
