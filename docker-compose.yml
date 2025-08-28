@@ -30,8 +30,13 @@ services:
       - "5432:5432"
     env_file:
       - db.env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./config/postgresql.conf:/etc/postgresql/postgresql.conf
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
     networks:
       - network
+      - monitoring
 
   postgres-exporter:
     image: prometheuscommunity/postgres-exporter
@@ -49,7 +54,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./grafana:/var/lib/grafana
+      - grafana-data:/var/lib/grafana
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
@@ -71,8 +76,10 @@ services:
           - prometheus
 
 volumes:
+  pgdata:
   prometheus-data:
     driver: local
+  grafana-data:
 
 networks:
   network:
