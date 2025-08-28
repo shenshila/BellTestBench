@@ -16,10 +16,27 @@ services:
       - zookeeper
     ports:
       - "9092:9092"
+      - "9999:9999"
     env_file:
       - kafka.env
     networks:
       - network
+      - monitoring
+
+#  kafka-exporter:
+#    image: danielqsj/kafka-exporter:latest
+#    container_name: kafka-exporter
+#    environment:
+#      KAFKA_BROKERS: "kafka:9092"
+#      KAFKA_VERSION: "7.4.4"
+#      TOPIC_FILTER: ".*"
+#    ports:
+#      - "9308:9308"
+#    networks:
+#      - network
+#      - monitoring
+#    depends_on:
+#      - kafka
 
   postgres:
     image: 'postgres:15'
@@ -30,6 +47,17 @@ services:
       - db.env
     networks:
       - network
+
+  postgres-exporter:
+    image: prometheuscommunity/postgres-exporter
+    environment:
+      DATA_SOURCE_NAME: "postgresql://admin:admin@postgres:5432/bench-db?sslmode=disable"
+    ports:
+      - "9187:9187"
+    networks:
+      - monitoring
+    depends_on:
+      - postgres
 
   grafana:
     build: 'config/grafana'
@@ -59,6 +87,7 @@ services:
 
 volumes:
   prometheus-data:
+    driver: local
 
 networks:
   network:
