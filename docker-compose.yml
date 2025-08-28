@@ -23,21 +23,6 @@ services:
       - network
       - monitoring
 
-#  kafka-exporter:
-#    image: danielqsj/kafka-exporter:latest
-#    container_name: kafka-exporter
-#    environment:
-#      KAFKA_BROKERS: "kafka:9092"
-#      KAFKA_VERSION: "7.4.4"
-#      TOPIC_FILTER: ".*"
-#    ports:
-#      - "9308:9308"
-#    networks:
-#      - network
-#      - monitoring
-#    depends_on:
-#      - kafka
-
   postgres:
     image: 'postgres:15'
     container_name: 'bench_db'
