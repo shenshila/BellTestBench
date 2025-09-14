@@ -1,0 +1,8 @@
+#spring:
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/bench-db
+#    username: admin
+#    password: admin
+#    driver-class-name: org.postgresql.Driver
+#  kafka:
+#    bootstrap-servers: localhost:9093

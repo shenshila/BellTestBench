@@ -23,10 +23,11 @@ public class SessionController {
         }
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteSession(@RequestBody UUID uuid){
+    @DeleteMapping("/delete/{uuid}")
+    public ResponseEntity<Void> deleteSession(@PathVariable String uuid){
         try {
-            sessionService.deleteSession(uuid);
+            UUID id  = UUID.fromString(uuid);
+            sessionService.deleteSession(id);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.status(401).build();
