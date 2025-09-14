@@ -1,6 +1,7 @@
 package com.melekhov.belltestbench.controller;
 
 import com.melekhov.belltestbench.service.SessionService;
+import com.melekhov.belltestbench.util.DelayUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +13,11 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class SessionController {
     private final SessionService sessionService;
+    private final DelayUtil delayUtil;
 
     @PostMapping("/create")
     public ResponseEntity<UUID> createSession(){
+        delayUtil.applyDelay("session.create");
         try {
             UUID sessionId = sessionService.createSession();
             return ResponseEntity.ok(sessionId);
@@ -25,6 +28,7 @@ public class SessionController {
 
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteSession(@RequestHeader("X-Session-Id") String sessionId){
+        delayUtil.applyDelay("session.delete");
         try {
             UUID id  = UUID.fromString(sessionId);
             sessionService.deleteSession(id);

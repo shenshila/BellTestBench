@@ -7,6 +7,7 @@ import com.melekhov.belltestbench.service.OrderService;
 import com.melekhov.belltestbench.service.ProducerService;
 import com.melekhov.belltestbench.service.ProductService;
 import com.melekhov.belltestbench.service.SessionService;
+import com.melekhov.belltestbench.util.DelayUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +20,12 @@ import java.util.Map;
 public class OrderController {
     private final OrderService orderService;
     private final ProductService productService;
-    private final SessionService sessionService;
     private final ProducerService producerService;
+    private final DelayUtil delayUtil;
 
     @GetMapping("/getProducts")
     public ResponseEntity<Map<String, Integer>> getProducts() {
+        delayUtil.applyDelay("order.get-products");
         return ResponseEntity.ok(productService.getAllProducts());
     }
 
@@ -31,6 +33,7 @@ public class OrderController {
     public ResponseEntity<?> createOrder(
             @RequestBody OrderRequestDto request)
     {
+        delayUtil.applyDelay("order.create");
         try {
             OrderIdResponseDto orderResponse = orderService.createOrder(request);
             return ResponseEntity.ok(orderResponse);
@@ -42,6 +45,7 @@ public class OrderController {
     @GetMapping("/getOrder/{id}")
     public ResponseEntity<?> getOrder(
             @PathVariable String id) {
+        delayUtil.applyDelay("order.get-order");
         try {
             OrderResponseDto order = orderService.getOrderById(Long.parseLong(id));
             return ResponseEntity.ok(order);
@@ -54,6 +58,7 @@ public class OrderController {
     public ResponseEntity<?> deleteOrder(
             @PathVariable String id
     ) {
+        delayUtil.applyDelay("order.delete");
         try {
             producerService.deleteOrderById(Long.parseLong(id));
             return ResponseEntity.accepted().body("Delete Order Successfully");

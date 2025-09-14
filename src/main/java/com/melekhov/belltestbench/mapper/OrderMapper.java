@@ -19,7 +19,6 @@ public class OrderMapper {
         }
 
         return Order.builder()
-                .sessionId(orderRequestDto.getSessionId())
                 .productName(orderRequestDto.getProductName())
                 .quantity(orderRequestDto.getQuantity())
                 .totalPrice(price * orderRequestDto.getQuantity())

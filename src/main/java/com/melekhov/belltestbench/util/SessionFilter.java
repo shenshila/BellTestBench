@@ -22,15 +22,10 @@ public class SessionFilter implements HandlerInterceptor {
                              Object handler) throws Exception {
         String requestUri = request.getRequestURI();
 
-        List<String> excludedUrls = Arrays.asList(
-                "/api/session/create",
-                "/api/post-message"
-        );
-
-        for (String excludedUrl : excludedUrls) {
-            if (requestUri.contains(excludedUrl)) {
-                return true;
-            }
+        if (requestUri.contains("/api/session/create") ||
+                requestUri.contains("/api/post-message") ||
+                requestUri.startsWith("/delay")) {
+            return true;
         }
 
         String sessionId = request.getHeader("X-Session-Id");
