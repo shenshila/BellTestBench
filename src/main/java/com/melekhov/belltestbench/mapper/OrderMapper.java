@@ -1,6 +1,7 @@
 package com.melekhov.belltestbench.mapper;
 
 import com.melekhov.belltestbench.dto.OrderRequestDto;
+import com.melekhov.belltestbench.dto.OrderResponseDto;
 import com.melekhov.belltestbench.model.Order;
 import com.melekhov.belltestbench.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,15 @@ public class OrderMapper {
                 .productName(orderRequestDto.getProductName())
                 .quantity(orderRequestDto.getQuantity())
                 .totalPrice(price * orderRequestDto.getQuantity())
+                .build();
+    }
+
+    public OrderResponseDto mapOrderToOrderResponseDto(Order order) {
+        return OrderResponseDto.builder()
+                .orderId(order.getId())
+                .productName(order.getProductName())
+                .quantity(order.getQuantity())
+                .totalPrice(order.getTotalPrice())
                 .build();
     }
 

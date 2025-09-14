@@ -27,6 +27,7 @@ public class SessionServiceImpl implements SessionService {
         sessions.remove(sessionId);
     }
 
+    @Override
     public boolean validateSession(UUID sessionId) {
         return sessions.containsKey(sessionId);
     }

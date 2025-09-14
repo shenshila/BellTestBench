@@ -23,4 +23,11 @@ public class ProducerServiceImpl implements ProducerService {
 
         kafkaTemplate.send(KafkaTopicConfig.POSTED_MESSAGE_TOPIC, kafkaMessageDto);
     }
+
+    @Override
+    public void deleteOrderById(Long orderId) {
+        kafkaTemplate.send(KafkaTopicConfig.DELETED_ORDER_TOPIC, orderId);
+    }
+
+
 }
