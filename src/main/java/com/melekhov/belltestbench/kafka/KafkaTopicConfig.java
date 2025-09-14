@@ -1,4 +1,4 @@
-package com.melekhov.belltestbench.config;
+package com.melekhov.belltestbench.kafka;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;

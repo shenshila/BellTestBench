@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/order")
@@ -23,8 +22,6 @@ public class OrderController {
     private final SessionService sessionService;
     private final ProducerService producerService;
 
-    private static final String SESSION_HEADER = "X-session-id";
-
     @GetMapping("/getProducts")
     public ResponseEntity<Map<String, Integer>> getProducts() {
         return ResponseEntity.ok(productService.getAllProducts());
@@ -32,18 +29,8 @@ public class OrderController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createOrder(
-            @RequestHeader(name = SESSION_HEADER, required = true) String sessionId,
             @RequestBody OrderRequestDto request)
     {
-//        UUID sessionUuid;
-//        try {
-//            sessionUuid = UUID.fromString(sessionId);
-//        } catch (IllegalArgumentException ex) {
-//            return ResponseEntity.status(401).body("Invalid session id");
-//        }
-//        if (!sessionService.validateSession(sessionUuid)) {
-//            return ResponseEntity.status(401).body("Session not found");
-//        }
         try {
             OrderIdResponseDto orderResponse = orderService.createOrder(request);
             return ResponseEntity.ok(orderResponse);
@@ -55,19 +42,24 @@ public class OrderController {
     @GetMapping("/getOrder/{id}")
     public ResponseEntity<?> getOrder(
             @PathVariable String id) {
-
-
-        OrderResponseDto order = orderService.getOrderById(Long.parseLong(id));
-
-        return ResponseEntity.ok(order);
+        try {
+            OrderResponseDto order = orderService.getOrderById(Long.parseLong(id));
+            return ResponseEntity.ok(order);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Could not find order with id: " + id);
+        }
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteOrder(
             @PathVariable String id
     ) {
-        producerService.deleteOrderById(Long.parseLong(id));
-        return ResponseEntity.accepted().body("Delete Order Successfully");
+        try {
+            producerService.deleteOrderById(Long.parseLong(id));
+            return ResponseEntity.accepted().body("Delete Order Successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Could not delete order with id: " + id);
+        }
     }
 
 }

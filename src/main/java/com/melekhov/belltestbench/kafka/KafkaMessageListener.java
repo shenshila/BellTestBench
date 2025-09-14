@@ -1,4 +1,4 @@
-package com.melekhov.belltestbench.config;
+package com.melekhov.belltestbench.kafka;
 
 import com.melekhov.belltestbench.dto.KafkaMessageDto;
 import com.melekhov.belltestbench.service.ConsumerService;

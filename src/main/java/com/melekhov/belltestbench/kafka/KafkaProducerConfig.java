@@ -1,4 +1,4 @@
-package com.melekhov.belltestbench.config;
+package com.melekhov.belltestbench.kafka;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerConfig;

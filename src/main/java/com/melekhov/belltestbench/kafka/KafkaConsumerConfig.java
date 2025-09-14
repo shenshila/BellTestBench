@@ -1,4 +1,4 @@
-package com.melekhov.belltestbench.config;
+package com.melekhov.belltestbench.kafka;
 
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import com.melekhov.belltestbench.dto.KafkaMessageDto;

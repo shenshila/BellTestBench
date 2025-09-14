@@ -1,6 +1,6 @@
 package com.melekhov.belltestbench.service.impl;
 
-import com.melekhov.belltestbench.config.KafkaTopicConfig;
+import com.melekhov.belltestbench.kafka.KafkaTopicConfig;
 import com.melekhov.belltestbench.dto.KafkaMessageDto;
 import com.melekhov.belltestbench.service.ProducerService;
 import lombok.RequiredArgsConstructor;
