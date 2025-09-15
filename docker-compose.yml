@@ -105,6 +105,41 @@ services:
         aliases:
           - prometheus
 
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: node-exporter
+    ports:
+      - "9100:9100"
+    restart: unless-stopped
+    networks:
+      - monitoring
+
+  influxdb:
+    image: influxdb:1.8
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+    volumes:
+      - ./influxdb-data:/var/lib/influxdb
+    environment:
+      - INFLUXDB_DB=jmeter
+      - INFLUXDB_USER=admin
+      - INFLUXDB_PASSWORD=admin
+    networks:
+      monitoring:
+        aliases:
+          - influxdb
+
+  chronograf:
+    image: chronograf:1.10
+    container_name: chronograf
+    ports:
+      - "8888:8888"
+    networks:
+      - monitoring
+    depends_on:
+      - influxdb
+
   app:
     build: .
     container_name: 'app'
