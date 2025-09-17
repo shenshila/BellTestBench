@@ -7,6 +7,8 @@ import com.melekhov.belltestbench.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 @RequiredArgsConstructor
 public class OrderMapper {
@@ -22,6 +24,7 @@ public class OrderMapper {
                 .productName(orderRequestDto.getProductName())
                 .quantity(orderRequestDto.getQuantity())
                 .totalPrice(price * orderRequestDto.getQuantity())
+//                .sessionId(UUID.fromString(orderRequestDto.getSessionId()))
                 .build();
     }
 

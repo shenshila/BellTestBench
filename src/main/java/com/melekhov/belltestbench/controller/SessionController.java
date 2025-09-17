@@ -22,7 +22,7 @@ public class SessionController {
         delayUtil.applyDelay("session.create");
         try {
             UUID sessionId = sessionService.createSession();
-            log.info("AAAAAAAAAAAAAAASession created with id: {} has been created", sessionId);
+            log.info("Session CREATED with id: {} has been created", sessionId);
             return ResponseEntity.ok(sessionId);
         } catch (Exception e) {
             return ResponseEntity.status(401).build();
@@ -35,7 +35,7 @@ public class SessionController {
         try {
             UUID id  = UUID.fromString(sessionId);
             sessionService.deleteSession(id);
-            log.info("AAAAAAAAAAAAAAASession DEELETED with id: {} has been deleted", id);
+            log.info("Session DELETED with id: {} has been deleted", id);
             return ResponseEntity.ok("Session deleted: " + id);
         } catch (Exception e) {
             return ResponseEntity.status(401).build();

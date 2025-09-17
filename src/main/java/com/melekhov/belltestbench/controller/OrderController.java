@@ -6,10 +6,8 @@ import com.melekhov.belltestbench.dto.OrderResponseDto;
 import com.melekhov.belltestbench.service.OrderService;
 import com.melekhov.belltestbench.service.ProducerService;
 import com.melekhov.belltestbench.service.ProductService;
-import com.melekhov.belltestbench.service.SessionService;
 import com.melekhov.belltestbench.util.DelayUtil;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +27,7 @@ public class OrderController {
     @GetMapping("/getProducts")
     public ResponseEntity<Map<String, Integer>> getProducts() {
         delayUtil.applyDelay("order.get-products");
-        log.info("get productsAAAAAAAAAAAAAAAAAAAA");
+        log.info("GET products");
         return ResponseEntity.ok(productService.getAllProducts());
     }
 
@@ -40,7 +38,7 @@ public class OrderController {
         delayUtil.applyDelay("order.create");
         try {
             OrderIdResponseDto orderResponse = orderService.createOrder(request);
-            log.info("Order createdAAAAAAAAAAAAAAa withID: {}", orderResponse.id());
+            log.info("Order CREATED a withID: {}", orderResponse.id());
             return ResponseEntity.ok(orderResponse);
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -53,9 +51,9 @@ public class OrderController {
             @PathVariable String id) {
         delayUtil.applyDelay("order.get-order");
         try {
-            log.info("AAAAAAAAAAAAAAAAAAAAget order");
+//            log.info("get order");
             OrderResponseDto order = orderService.getOrderById(Long.parseLong(id));
-            log.info("AAAAAAAAAAAAAAAAAAAAget order response: {}", order);
+            log.info("GET order response: {}", order);
             return ResponseEntity.ok(order);
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -70,7 +68,7 @@ public class OrderController {
         delayUtil.applyDelay("order.delete");
         try {
             producerService.deleteOrderById(Long.parseLong(id));
-            log.info("AAAAAAAAAAAAAAAAAAAAAaOrder with id: {} has been deleted", id);
+            log.info("Order with id: {} has been DELETED", id);
             return ResponseEntity.accepted().body("Delete Order Successfully");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Could not delete order with id: " + id);

@@ -22,6 +22,7 @@ services:
       - zookeeper
     ports:
       - "9092:9092"
+      - "9093:9093"
     env_file:
       - kafka.env
     networks:
@@ -40,6 +41,8 @@ services:
       - "9308:9308"
     command:
       - "--kafka.server=kafka:9092"
+    environment:
+      - KAFKA_BROKERS=kafka:9092
     depends_on:
       kafka:
         condition: service_healthy
@@ -83,8 +86,8 @@ services:
     build: 'config/grafana'
     ports:
       - "3000:3000"
-#    volumes:
-#      - grafana-data:/var/lib/grafana
+    volumes:
+      - ./config/grafana/provisioning:/etc/grafana/provisioning
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
@@ -140,27 +143,27 @@ services:
     depends_on:
       - influxdb
 
-  app:
-    build: .
-    container_name: 'app'
-    depends_on:
-      zookeeper:
-        condition: service_healthy
-      kafka:
-        condition: service_healthy
-      postgres:
-        condition: service_healthy
-    env_file:
-      - app.env
-    networks:
-      - network
-    ports:
-      - "8081:8081"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
+#  app:
+#    build: .
+#    container_name: 'app'
+#    depends_on:
+#      zookeeper:
+#        condition: service_healthy
+#      kafka:
+#        condition: service_healthy
+#      postgres:
+#        condition: service_healthy
+#    env_file:
+#      - app.env
+#    networks:
+#      - network
+#    ports:
+#      - "8081:8081"
+#    healthcheck:
+#      test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health"]
+#      interval: 30s
+#      timeout: 10s
+#      retries: 5
 
 volumes:
   pgdata:
